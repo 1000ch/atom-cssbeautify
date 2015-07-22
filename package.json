@@ -1,6 +1,6 @@
 {
   "name": "cssbeautify",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "private": true,
   "description": "Beautify your CSS with CSSBeautify",
   "activationCommands": {
