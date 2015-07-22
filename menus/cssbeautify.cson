@@ -1,0 +1,16 @@
+'context-menu':
+  'atom-workspace': [{
+    label: 'Beautify CSS'
+    command: 'cssbeautify:execute'
+  }]
+
+'menu': [{
+  'label': 'Packages'
+  'submenu': [
+    'label': 'CSSBeautify'
+    'submenu': [{
+      label: 'Beautify CSS',
+      command: 'cssbeautify:execute'
+    }]
+  ]
+}]

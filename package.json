@@ -1,0 +1,39 @@
+{
+  "name": "cssbeautify",
+  "version": "0.1.0",
+  "private": true,
+  "main": "lib/cssbeautify",
+  "description": "Beautify your CSS with CSSBeautify",
+  "activationCommands": {
+    "atom-workspace": [
+      "cssbeautify:execute"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1000ch/atom-cssbeautify.git"
+  },
+  "engines": {
+    "atom": ">=1.0.0"
+  },
+  "keywords": [
+    "CSS",
+    "format",
+    "style",
+    "beautify",
+    "cssbeautify"
+  ],
+  "author": {
+    "name": "1000ch",
+    "email": "shogo.sensui@gmail.com",
+    "url": "http://github.com/1000ch"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/1000ch/atom-cssbeautify/issues"
+  },
+  "homepage": "https://github.com/1000ch/atom-cssbeautify#readme",
+  "dependencies": {
+    "cssbeautify": "^0.3.1"
+  }
+}
