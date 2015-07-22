@@ -1,2 +1,2 @@
 'atom-workspace':
-  'ctrl-alt-b': 'cssbeautify:execute'
+  'ctrl-alt-c': 'cssbeautify:execute'
