@@ -7,7 +7,7 @@ import CSSBeautify from 'cssbeautify';
 export let config = {
   executeOnSave: {
     title: 'Execute on save',
-    description: 'Execute Beautifying CSS on save.',
+    description: 'Execute beautifying CSS on save.',
     type: 'boolean',
     default: false
   },
@@ -21,12 +21,41 @@ export let config = {
     title: 'Indent Size',
     type: 'number',
     default: 2
+  },
+  openBrace: {
+    title: 'Open Brace',
+    description: 'defines the placement of open curly brace.',
+    type: 'string',
+    default: 'end-of-line',
+    enum: ['end-of-line', 'separate-line']
+  },
+  autoSemicolon: {
+    title: 'Auto Semicolon',
+    description: 'always inserts a semicolon after the last ruleset.',
+    type: 'boolean',
+    default: false
   }
 };
 
-const isExecuteOnSave = () => atom.config.get('cssbeautify.executeOnSave');
-const indentType      = () => atom.config.get('cssbeautify.indentType')
-const indentSize      = () => atom.config.get('cssbeautify.indentSize')
+const executeOnSave = () => atom.config.get('cssbeautify.executeOnSave');
+const indentType    = () => atom.config.get('cssbeautify.indentType')
+const indentSize    = () => atom.config.get('cssbeautify.indentSize')
+const openBrace     = () => atom.config.get('cssbeautify.openBrace')
+const autoSemicolon = () => atom.config.get('cssbeautify.autoSemicolon')
+
+const getIndent = () => {
+
+  let indent = '';
+  switch (indentType()) {
+    case 'space':
+      indent = Array(indentSize() + 1).join(' ');
+      break;
+    case 'tab':
+      indent = '\t';
+      break;
+  }
+  return indent;
+};
 
 const execute = () => {
 
@@ -39,22 +68,14 @@ const execute = () => {
   let text = editor.getText();
   let selectedText = editor.getSelectedText();
 
-  let indent = '';
-  switch (indentType()) {
-    case 'space':
-      indent = Array(indentSize() + 1).join(' ');
-      break;
-    case 'tab':
-      indent = '\t';
-      break;
-  }
-
   if (selectedText.length !== 0) {
     try {
       editor.setTextInBufferRange(
         editor.getSelectedBufferRange(),
         CSSBeautify(selectedText, {
-          indent: indent
+          indent: getIndent(),
+          openbrace: openBrace(),
+          autosemicolon: autoSemicolon()
         })
       );
     } catch (e) {}
@@ -62,7 +83,9 @@ const execute = () => {
     try {
       editor.setText(
         CSSBeautify(text, {
-          indent: indent
+          indent: getIndent(),
+          openbrace: openBrace(),
+          autosemicolon: autoSemicolon()
         })
       )
     } catch (e) {}
@@ -72,12 +95,14 @@ const execute = () => {
 let editorObserver = null;
 
 export const activate = (state) => {
+
   atom.commands.add('atom-workspace', 'cssbeautify:execute', () => {
     execute();
   });
+
   editorObserver = atom.workspace.observeTextEditors((editor) => {
     editor.getBuffer().onWillSave(() => {
-      if (isExecuteOnSave()) {
+      if (executeOnSave()) {
         execute();
       }
     });
