@@ -5,8 +5,8 @@ import path        from 'path';
 import CSSBeautify from 'cssbeautify';
 
 export let config = {
-  executeOnSave: {
-    title: 'Execute on save',
+  beautifyOnSave: {
+    title: 'Beautify on Save',
     description: 'Execute beautifying CSS on save.',
     type: 'boolean',
     default: false
@@ -37,11 +37,11 @@ export let config = {
   }
 };
 
-const executeOnSave = () => atom.config.get('cssbeautify.executeOnSave');
-const indentType    = () => atom.config.get('cssbeautify.indentType')
-const indentSize    = () => atom.config.get('cssbeautify.indentSize')
-const openBrace     = () => atom.config.get('cssbeautify.openBrace')
-const autoSemicolon = () => atom.config.get('cssbeautify.autoSemicolon')
+const beautifyOnSave = () => atom.config.get('cssbeautify.beautifyOnSave');
+const indentType     = () => atom.config.get('cssbeautify.indentType')
+const indentSize     = () => atom.config.get('cssbeautify.indentSize')
+const openBrace      = () => atom.config.get('cssbeautify.openBrace')
+const autoSemicolon  = () => atom.config.get('cssbeautify.autoSemicolon')
 
 const getIndent = () => {
 
@@ -102,7 +102,7 @@ export const activate = (state) => {
 
   editorObserver = atom.workspace.observeTextEditors((editor) => {
     editor.getBuffer().onWillSave(() => {
-      if (executeOnSave()) {
+      if (beautifyOnSave()) {
         execute();
       }
     });
