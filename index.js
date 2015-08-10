@@ -57,6 +57,21 @@ const getIndent = () => {
   return indent;
 };
 
+const beautify = (css) => {
+
+  try {
+    return CSSBeautify(css, {
+      indent: getIndent(),
+      openbrace: openBrace(),
+      autosemicolon: autoSemicolon()
+    });
+  } catch (e) {
+    console.error(e);
+  }
+
+  return null;
+};
+
 const execute = () => {
 
   const editor = atom.workspace.getActiveTextEditor();
@@ -69,26 +84,15 @@ const execute = () => {
   let selectedText = editor.getSelectedText();
 
   if (selectedText.length !== 0) {
-    try {
-      editor.setTextInBufferRange(
-        editor.getSelectedBufferRange(),
-        CSSBeautify(selectedText, {
-          indent: getIndent(),
-          openbrace: openBrace(),
-          autosemicolon: autoSemicolon()
-        })
-      );
-    } catch (e) {}
+    let formatted = beautify(selectedText);
+    if (formatted) {
+      editor.setTextInBufferRange(editor.getSelectedBufferRange(), formatted);
+    }
   } else {
-    try {
-      editor.setText(
-        CSSBeautify(text, {
-          indent: getIndent(),
-          openbrace: openBrace(),
-          autosemicolon: autoSemicolon()
-        })
-      )
-    } catch (e) {}
+    let formatted = beautify(text);
+    if (formatted) {
+      editor.setText(formatted);
+    }
   }
 };
 
