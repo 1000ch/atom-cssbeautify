@@ -1,5 +1,5 @@
 'context-menu':
-  'atom-workspace': [{
+  'atom-text-editor': [{
     label: 'Beautify CSS'
     command: 'cssbeautify:execute'
   }]
