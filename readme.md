@@ -1,6 +1,4 @@
-# [atom-cssbeautify](https://atom.io/packages/cssbeautify)
-
-## About
+# [atom-cssbeautify](https://atom.io/packages/cssbeautify) [![Dependency Status](https://david-dm.org/1000ch/atom-cssbeautify.svg)](https://david-dm.org/1000ch/atom-cssbeautify)
 
 Beautify your CSS using [CSSBeautify](https://github.com/senchalabs/cssbeautify).
 
