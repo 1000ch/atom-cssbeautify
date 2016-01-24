@@ -10,7 +10,7 @@ $ apm install cssbeautify
 
 ## Usage
 
-- Press `ctrl + alt + c`
+- Press <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>c</kbd>
 - `Packages` > `CSSBeautify` > `Beautify CSS`
 - Right Click > `Beautify CSS`
 
