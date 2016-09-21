@@ -10,9 +10,8 @@ $ apm install cssbeautify
 
 ## Usage
 
-- Press <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>c</kbd>
 - `Packages` > `CSSBeautify` > `Beautify CSS`
-- Right Click > `Beautify CSS`
+- Context Menu > `Beautify CSS`
 
 Selected text will be beautified if there is selection.
 
