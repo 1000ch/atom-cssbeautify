@@ -1,7 +1,7 @@
 "use babel";
 
 import { CompositeDisposable } from 'atom';
-import CSSBeautify from 'cssbeautify';
+import cssbeautify from 'cssbeautify';
 
 let subscriptions;
 let beautifyOnSave;
@@ -9,6 +9,33 @@ let indentType;
 let indentSize;
 let openBrace;
 let autoSemicolon;
+let editorObserver = null;
+
+export function activate(state) {
+  subscriptions = new CompositeDisposable();
+  subscriptions.add(atom.config.observe('cssbeautify.beautifyOnSave', value => beautifyOnSave = value));
+  subscriptions.add(atom.config.observe('cssbeautify.indentType', value => indentType = value));
+  subscriptions.add(atom.config.observe('cssbeautify.indentSize', value => indentSize = value));
+  subscriptions.add(atom.config.observe('cssbeautify.openBrace', value => openBrace = value));
+  subscriptions.add(atom.config.observe('cssbeautify.autoSemicolon', value => autoSemicolon = value));
+
+  atom.commands.add('atom-workspace', 'cssbeautify:execute', () => {
+    execute();
+  });
+
+  editorObserver = atom.workspace.observeTextEditors(editor => {
+    editor.getBuffer().onWillSave(() => {
+      if (beautifyOnSave) {
+        execute();
+      }
+    });
+  });
+}
+
+export function deactivate() {
+  subscriptions.dispose();
+  editorObserver.dispose();
+}
 
 function getIndent() {
   let indent = '';
@@ -25,7 +52,7 @@ function getIndent() {
 
 function beautify(css) {
   try {
-    return CSSBeautify(css, {
+    return cssbeautify(css, {
       indent: getIndent(),
       openbrace: openBrace,
       autosemicolon: autoSemicolon
@@ -61,32 +88,4 @@ function execute() {
       editor.setCursorBufferPosition(position);
     }
   }
-}
-
-let editorObserver = null;
-
-export function activate(state) {
-  subscriptions = new CompositeDisposable();
-  subscriptions.add(atom.config.observe('cssbeautify.beautifyOnSave', value => beautifyOnSave = value));
-  subscriptions.add(atom.config.observe('cssbeautify.indentType', value => indentType = value));
-  subscriptions.add(atom.config.observe('cssbeautify.indentSize', value => indentSize = value));
-  subscriptions.add(atom.config.observe('cssbeautify.openBrace', value => openBrace = value));
-  subscriptions.add(atom.config.observe('cssbeautify.autoSemicolon', value => autoSemicolon = value));
-
-  atom.commands.add('atom-workspace', 'cssbeautify:execute', () => {
-    execute();
-  });
-
-  editorObserver = atom.workspace.observeTextEditors(editor => {
-    editor.getBuffer().onWillSave(() => {
-      if (beautifyOnSave) {
-        execute();
-      }
-    });
-  });
-}
-
-export function deactivate() {
-  subscriptions.dispose();
-  editorObserver.dispose();
 }
