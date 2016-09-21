@@ -2,39 +2,6 @@
 
 import CSSBeautify from 'cssbeautify';
 
-export const config = {
-  beautifyOnSave: {
-    title: 'Beautify on Save',
-    description: 'Execute beautifying CSS on save.',
-    type: 'boolean',
-    default: false
-  },
-  indentType: {
-    title: 'Indent Type',
-    type: 'string',
-    default: 'space',
-    enum: ['space', 'tab']
-  },
-  indentSize: {
-    title: 'Indent Size',
-    type: 'number',
-    default: 2
-  },
-  openBrace: {
-    title: 'Open Brace',
-    description: 'defines the placement of open curly brace.',
-    type: 'string',
-    default: 'end-of-line',
-    enum: ['end-of-line', 'separate-line']
-  },
-  autoSemicolon: {
-    title: 'Auto Semicolon',
-    description: 'always inserts a semicolon after the last ruleset.',
-    type: 'boolean',
-    default: false
-  }
-};
-
 let beautifyOnSave;
 let indentType;
 let indentSize;
